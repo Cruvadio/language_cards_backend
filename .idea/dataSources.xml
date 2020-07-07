@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="PostgreSQL - auth@localhost" uuid="3f65f2e0-1ef3-408c-8c02-a70b5ee142dd">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/auth</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="languagecards@localhost" uuid="d45bb11f-2218-4705-bbff-7cbce71c6e4c">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/languagecards</jdbc-url>
+    </data-source>
+  </component>
+</project>
