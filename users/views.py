@@ -9,12 +9,35 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.serializers import jwt_payload_handler
-
+from django.utils.translation import ugettext_lazy as _
 from cards.models import Cardset
 from backend import settings
-from .serializers import UserSerializer, GroupSerializer, UserGetSerializer
+from .models import Profile
+from .serializers import UserSerializer, GroupSerializer, UserGetSerializer, ProfileSerializer
 
 # Create your views here.
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows to get full user infomation
+    """
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated, ]
+
+    def retrieve(self, request, pk):
+        user = User.objects.get(id=pk)
+        if user:
+            profile = Profile.objects.get(user=user)
+            serializer = self.get_serializer(profile)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            res = {
+                "message": _("No existing user with that ID")
+            }
+            return Response(res, status=status.HTTP_404_NOT_FOUND)
+
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
@@ -49,6 +72,7 @@ class CreateUserAPIView(APIView):
         serializer = UserSerializer(data=user,context=serializer_context)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        Profile.objects.all().create(user=User.objects.get(username=user["username"]))
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -96,7 +120,9 @@ def authenticate_user(request):
                 payload = jwt_payload_handler(user)
                 token = jwt.encode(payload, settings.SECRET_KEY)
                 user_details = {}
-                user_details['name'] = "%s %s" % (user.first_name, user.last_name)
+                user_details['id'] = user.id
+                user_details['email'] = email
+                user_details['login'] = user.username
                 user_details['token'] = token
                 user_logged_in.send(sender=user.__class__, request=request, user=user)
                 return Response(user_details, status=status.HTTP_200_OK)
@@ -104,11 +130,11 @@ def authenticate_user(request):
                 raise e
         else:
             res = {
-                'error': 'can not authenticate with given credentials or the account has been deactivated'
+                'error': _('Can not authenticate with given credentials or the account has been deactivated')
             }
             return Response(res, status=status.HTTP_403_FORBIDDEN)
     except KeyError:
-        res = {'error' : "please provide an email and password" }
+        res = {'error' : _("Please provide an email and password") }
         return Response(res)
 
 

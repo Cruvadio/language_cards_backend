@@ -1,24 +1,11 @@
 from rest_framework import serializers
+
+from backend.serializers import LanguageSerializer, ThemeSerializer
+from users.serializers import UserGetSerializer
 from .models import *
 
 
-class LanguageSerializer(serializers.HyperlinkedModelSerializer):
 
-    class Meta:
-        model = Language
-        fields = '__all__'
-
-
-class WordSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Word
-        fields = '__all__'
-
-
-class ThemeSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Theme
-        fields = '__all__'
 
 
 class CardsetHyperlinkedSerializer(serializers.HyperlinkedModelSerializer):
@@ -29,10 +16,10 @@ class CardsetHyperlinkedSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CardsetSerializer(serializers.ModelSerializer):
-    to_language = serializers.StringRelatedField(many=False)
-    from_language = serializers.StringRelatedField(many=False)
-    owner = serializers.StringRelatedField(many=False)
-    theme = serializers.StringRelatedField(many=True)
+    to_language = LanguageSerializer(many=False)
+    from_language = LanguageSerializer(many=False)
+    #owner = UserGetSerializer(many=False)
+    theme = ThemeSerializer(many=False)
 
     class Meta:
         model = Cardset

@@ -1,0 +1,3460 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /users/:
+    get:
+      operationId: listUsers
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        url:
+                          type: string
+                          readOnly: true
+                        username:
+                          type: string
+                          description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\
+                            \u043B\u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435\
+                            . \u041D\u0435 \u0431\u043E\u043B\u0435\u0435 150 \u0441\
+                            \u0438\u043C\u0432\u043E\u043B\u043E\u0432. \u0422\u043E\
+                            \u043B\u044C\u043A\u043E \u0431\u0443\u043A\u0432\u044B\
+                            , \u0446\u0438\u0444\u0440\u044B \u0438 \u0441\u0438\u043C\
+                            \u0432\u043E\u043B\u044B @/./+/-/_."
+                          pattern: ^[\w.@+-]+\Z
+                          maxLength: 150
+                        last_name:
+                          type: string
+                          maxLength: 150
+                        first_name:
+                          type: string
+                          maxLength: 30
+                        is_active:
+                          type: boolean
+                          description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\
+                            \u0435, \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\
+                            \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0434\
+                            \u043E\u043B\u0436\u0435\u043D \u0441\u0447\u0438\u0442\
+                            \u0430\u0442\u044C\u0441\u044F \u0430\u043A\u0442\u0438\
+                            \u0432\u043D\u044B\u043C. \u0423\u0431\u0435\u0440\u0438\
+                            \u0442\u0435 \u044D\u0442\u0443 \u043E\u0442\u043C\u0435\
+                            \u0442\u043A\u0443 \u0432\u043C\u0435\u0441\u0442\u043E\
+                            \ \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F \u0443\
+                            \u0447\u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\
+                            \u0438\u0441\u0438."
+                        profile:
+                          type: string
+                          readOnly: true
+                      required:
+                      - username
+          description: ''
+    post:
+      operationId: createUser
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id001
+              properties:
+                username:
+                  type: string
+                  description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\
+                    \u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435 \u0431\
+                    \u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\u043E\u043B\
+                    \u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E \u0431\u0443\
+                    \u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B \u0438 \u0441\
+                    \u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                last_name:
+                  type: string
+                  maxLength: 150
+                first_name:
+                  type: string
+                  maxLength: 30
+                is_active:
+                  type: boolean
+                  description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435,\
+                    \ \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\
+                    \u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\u0435\
+                    \u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\u0441\u044F\
+                    \ \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C. \u0423\u0431\
+                    \u0435\u0440\u0438\u0442\u0435 \u044D\u0442\u0443 \u043E\u0442\
+                    \u043C\u0435\u0442\u043A\u0443 \u0432\u043C\u0435\u0441\u0442\u043E\
+                    \ \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F \u0443\u0447\
+                    \u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\u0438\u0441\u0438\
+                    ."
+              required:
+              - username
+          application/x-www-form-urlencoded:
+            schema: *id001
+          multipart/form-data:
+            schema: *id001
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  url:
+                    type: string
+                    readOnly: true
+                  username:
+                    type: string
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  is_active:
+                    type: boolean
+                    description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435\
+                      , \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\
+                      \u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\
+                      \u0435\u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\u0441\
+                      \u044F \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C. \u0423\
+                      \u0431\u0435\u0440\u0438\u0442\u0435 \u044D\u0442\u0443 \u043E\
+                      \u0442\u043C\u0435\u0442\u043A\u0443 \u0432\u043C\u0435\u0441\
+                      \u0442\u043E \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F\
+                      \ \u0443\u0447\u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\
+                      \u0438\u0441\u0438."
+                  profile:
+                    type: string
+                    readOnly: true
+                required:
+                - username
+          description: ''
+  /users/{id}/:
+    get:
+      operationId: retrieveUser
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u043F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  url:
+                    type: string
+                    readOnly: true
+                  username:
+                    type: string
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  is_active:
+                    type: boolean
+                    description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435\
+                      , \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\
+                      \u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\
+                      \u0435\u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\u0441\
+                      \u044F \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C. \u0423\
+                      \u0431\u0435\u0440\u0438\u0442\u0435 \u044D\u0442\u0443 \u043E\
+                      \u0442\u043C\u0435\u0442\u043A\u0443 \u0432\u043C\u0435\u0441\
+                      \u0442\u043E \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F\
+                      \ \u0443\u0447\u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\
+                      \u0438\u0441\u0438."
+                  profile:
+                    type: string
+                    readOnly: true
+                required:
+                - username
+          description: ''
+    put:
+      operationId: updateUser
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u043F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id002
+              properties:
+                username:
+                  type: string
+                  description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\
+                    \u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435 \u0431\
+                    \u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\u043E\u043B\
+                    \u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E \u0431\u0443\
+                    \u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B \u0438 \u0441\
+                    \u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                last_name:
+                  type: string
+                  maxLength: 150
+                first_name:
+                  type: string
+                  maxLength: 30
+                is_active:
+                  type: boolean
+                  description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435,\
+                    \ \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\
+                    \u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\u0435\
+                    \u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\u0441\u044F\
+                    \ \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C. \u0423\u0431\
+                    \u0435\u0440\u0438\u0442\u0435 \u044D\u0442\u0443 \u043E\u0442\
+                    \u043C\u0435\u0442\u043A\u0443 \u0432\u043C\u0435\u0441\u0442\u043E\
+                    \ \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F \u0443\u0447\
+                    \u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\u0438\u0441\u0438\
+                    ."
+              required:
+              - username
+          application/x-www-form-urlencoded:
+            schema: *id002
+          multipart/form-data:
+            schema: *id002
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  url:
+                    type: string
+                    readOnly: true
+                  username:
+                    type: string
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  is_active:
+                    type: boolean
+                    description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435\
+                      , \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\
+                      \u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\
+                      \u0435\u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\u0441\
+                      \u044F \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C. \u0423\
+                      \u0431\u0435\u0440\u0438\u0442\u0435 \u044D\u0442\u0443 \u043E\
+                      \u0442\u043C\u0435\u0442\u043A\u0443 \u0432\u043C\u0435\u0441\
+                      \u0442\u043E \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F\
+                      \ \u0443\u0447\u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\
+                      \u0438\u0441\u0438."
+                  profile:
+                    type: string
+                    readOnly: true
+                required:
+                - username
+          description: ''
+    patch:
+      operationId: partial_updateUser
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u043F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id003
+              properties:
+                username:
+                  type: string
+                  description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\
+                    \u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435 \u0431\
+                    \u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\u043E\u043B\
+                    \u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E \u0431\u0443\
+                    \u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B \u0438 \u0441\
+                    \u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                last_name:
+                  type: string
+                  maxLength: 150
+                first_name:
+                  type: string
+                  maxLength: 30
+                is_active:
+                  type: boolean
+                  description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435,\
+                    \ \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\
+                    \u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\u0435\
+                    \u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\u0441\u044F\
+                    \ \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C. \u0423\u0431\
+                    \u0435\u0440\u0438\u0442\u0435 \u044D\u0442\u0443 \u043E\u0442\
+                    \u043C\u0435\u0442\u043A\u0443 \u0432\u043C\u0435\u0441\u0442\u043E\
+                    \ \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F \u0443\u0447\
+                    \u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\u0438\u0441\u0438\
+                    ."
+          application/x-www-form-urlencoded:
+            schema: *id003
+          multipart/form-data:
+            schema: *id003
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  url:
+                    type: string
+                    readOnly: true
+                  username:
+                    type: string
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  is_active:
+                    type: boolean
+                    description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435\
+                      , \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\
+                      \u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\
+                      \u0435\u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\u0441\
+                      \u044F \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C. \u0423\
+                      \u0431\u0435\u0440\u0438\u0442\u0435 \u044D\u0442\u0443 \u043E\
+                      \u0442\u043C\u0435\u0442\u043A\u0443 \u0432\u043C\u0435\u0441\
+                      \u0442\u043E \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F\
+                      \ \u0443\u0447\u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\
+                      \u0438\u0441\u0438."
+                  profile:
+                    type: string
+                    readOnly: true
+                required:
+                - username
+          description: ''
+    delete:
+      operationId: destroyUser
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u043F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /users/{id}/return_cards/:
+    get:
+      operationId: return_cardsUser
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u043F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  url:
+                    type: string
+                    readOnly: true
+                  username:
+                    type: string
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  is_active:
+                    type: boolean
+                    description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435\
+                      , \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\
+                      \u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\
+                      \u0435\u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\u0441\
+                      \u044F \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C. \u0423\
+                      \u0431\u0435\u0440\u0438\u0442\u0435 \u044D\u0442\u0443 \u043E\
+                      \u0442\u043C\u0435\u0442\u043A\u0443 \u0432\u043C\u0435\u0441\
+                      \u0442\u043E \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F\
+                      \ \u0443\u0447\u0451\u0442\u043D\u043E\u0439 \u0437\u0430\u043F\
+                      \u0438\u0441\u0438."
+                  profile:
+                    type: string
+                    readOnly: true
+                required:
+                - username
+          description: ''
+  /groups/:
+    get:
+      operationId: listGroups
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 150
+                      required:
+                      - name
+          description: ''
+    post:
+      operationId: createGroup
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id004
+              properties:
+                name:
+                  type: string
+                  maxLength: 150
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id004
+          multipart/form-data:
+            schema: *id004
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 150
+                required:
+                - name
+          description: ''
+  /groups/{id}/:
+    get:
+      operationId: retrieveGroup
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u0433\u0440\u0443\u043F\
+          \u043F\u0430."
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 150
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateGroup
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u0433\u0440\u0443\u043F\
+          \u043F\u0430."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id005
+              properties:
+                name:
+                  type: string
+                  maxLength: 150
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id005
+          multipart/form-data:
+            schema: *id005
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 150
+                required:
+                - name
+          description: ''
+    patch:
+      operationId: partial_updateGroup
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u0433\u0440\u0443\u043F\
+          \u043F\u0430."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id006
+              properties:
+                name:
+                  type: string
+                  maxLength: 150
+          application/x-www-form-urlencoded:
+            schema: *id006
+          multipart/form-data:
+            schema: *id006
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 150
+                required:
+                - name
+          description: ''
+    delete:
+      operationId: destroyGroup
+      description: API endpoint that allows groups to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u0433\u0440\u0443\u043F\
+          \u043F\u0430."
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /languages/:
+    get:
+      operationId: listLanguages
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter the language name (e.g. English, Russian,
+                            German etc.), max symbols - 200
+                          maxLength: 200
+                      required:
+                      - name
+          description: ''
+    post:
+      operationId: createLanguage
+      description: API endpoint that allows users to be viewed or edited.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id007
+              properties:
+                name:
+                  type: string
+                  description: Enter the language name (e.g. English, Russian, German
+                    etc.), max symbols - 200
+                  maxLength: 200
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id007
+          multipart/form-data:
+            schema: *id007
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: Enter the language name (e.g. English, Russian, German
+                      etc.), max symbols - 200
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+  /languages/{id}/:
+    get:
+      operationId: retrieveLanguage
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this language.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: Enter the language name (e.g. English, Russian, German
+                      etc.), max symbols - 200
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateLanguage
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this language.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id008
+              properties:
+                name:
+                  type: string
+                  description: Enter the language name (e.g. English, Russian, German
+                    etc.), max symbols - 200
+                  maxLength: 200
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id008
+          multipart/form-data:
+            schema: *id008
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: Enter the language name (e.g. English, Russian, German
+                      etc.), max symbols - 200
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+    patch:
+      operationId: partial_updateLanguage
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this language.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id009
+              properties:
+                name:
+                  type: string
+                  description: Enter the language name (e.g. English, Russian, German
+                    etc.), max symbols - 200
+                  maxLength: 200
+          application/x-www-form-urlencoded:
+            schema: *id009
+          multipart/form-data:
+            schema: *id009
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: Enter the language name (e.g. English, Russian, German
+                      etc.), max symbols - 200
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+    delete:
+      operationId: destroyLanguage
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this language.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /words/:
+    get:
+      operationId: listWords
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: A string value that represents word, max symbols
+                            - 200
+                          maxLength: 200
+                      required:
+                      - name
+          description: ''
+    post:
+      operationId: createWord
+      description: API endpoint that allows users to be viewed or edited.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id010
+              properties:
+                name:
+                  type: string
+                  description: A string value that represents word, max symbols -
+                    200
+                  maxLength: 200
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id010
+          multipart/form-data:
+            schema: *id010
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: A string value that represents word, max symbols
+                      - 200
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+  /words/{id}/:
+    get:
+      operationId: retrieveWord
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this word.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: A string value that represents word, max symbols
+                      - 200
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateWord
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this word.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id011
+              properties:
+                name:
+                  type: string
+                  description: A string value that represents word, max symbols -
+                    200
+                  maxLength: 200
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id011
+          multipart/form-data:
+            schema: *id011
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: A string value that represents word, max symbols
+                      - 200
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+    patch:
+      operationId: partial_updateWord
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this word.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id012
+              properties:
+                name:
+                  type: string
+                  description: A string value that represents word, max symbols -
+                    200
+                  maxLength: 200
+          application/x-www-form-urlencoded:
+            schema: *id012
+          multipart/form-data:
+            schema: *id012
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: A string value that represents word, max symbols
+                      - 200
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+    delete:
+      operationId: destroyWord
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this word.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /themes/:
+    get:
+      operationId: listThemes
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter name of cardset name (e.g. IT, sport,
+                            music etc.)
+                          maxLength: 200
+                      required:
+                      - name
+          description: ''
+    post:
+      operationId: createTheme
+      description: API endpoint that allows users to be viewed or edited.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id013
+              properties:
+                name:
+                  type: string
+                  description: Enter name of cardset name (e.g. IT, sport, music etc.)
+                  maxLength: 200
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id013
+          multipart/form-data:
+            schema: *id013
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: Enter name of cardset name (e.g. IT, sport, music
+                      etc.)
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+  /themes/{id}/:
+    get:
+      operationId: retrieveTheme
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this theme.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: Enter name of cardset name (e.g. IT, sport, music
+                      etc.)
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateTheme
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this theme.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id014
+              properties:
+                name:
+                  type: string
+                  description: Enter name of cardset name (e.g. IT, sport, music etc.)
+                  maxLength: 200
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id014
+          multipart/form-data:
+            schema: *id014
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: Enter name of cardset name (e.g. IT, sport, music
+                      etc.)
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+    patch:
+      operationId: partial_updateTheme
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this theme.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id015
+              properties:
+                name:
+                  type: string
+                  description: Enter name of cardset name (e.g. IT, sport, music etc.)
+                  maxLength: 200
+          application/x-www-form-urlencoded:
+            schema: *id015
+          multipart/form-data:
+            schema: *id015
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                    description: Enter name of cardset name (e.g. IT, sport, music
+                      etc.)
+                    maxLength: 200
+                required:
+                - name
+          description: ''
+    delete:
+      operationId: destroyTheme
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this theme.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /cardsets/:
+    get:
+      operationId: listCardsets
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        to_language:
+                          properties:
+                            name:
+                              type: string
+                              description: Enter the language name (e.g. English,
+                                Russian, German etc.), max symbols - 200
+                              maxLength: 200
+                          required:
+                          - name
+                          type: object
+                        from_language:
+                          properties:
+                            name:
+                              type: string
+                              description: Enter the language name (e.g. English,
+                                Russian, German etc.), max symbols - 200
+                              maxLength: 200
+                          required:
+                          - name
+                          type: object
+                        theme:
+                          properties:
+                            name:
+                              type: string
+                              description: Enter name of cardset name (e.g. IT, sport,
+                                music etc.)
+                              maxLength: 200
+                          required:
+                          - name
+                          type: object
+                        name:
+                          type: string
+                          description: Name of cardset
+                          maxLength: 200
+                        last_revision_date:
+                          type: string
+                          format: date
+                          readOnly: true
+                        owner:
+                          type: integer
+                          nullable: true
+                      required:
+                      - to_language
+                      - from_language
+                      - theme
+                      - name
+          description: ''
+    post:
+      operationId: createCardset
+      description: API endpoint that allows users to be viewed or edited.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id016
+              properties:
+                to_language:
+                  properties:
+                    name:
+                      type: string
+                      description: Enter the language name (e.g. English, Russian,
+                        German etc.), max symbols - 200
+                      maxLength: 200
+                  required:
+                  - name
+                  type: object
+                from_language:
+                  properties:
+                    name:
+                      type: string
+                      description: Enter the language name (e.g. English, Russian,
+                        German etc.), max symbols - 200
+                      maxLength: 200
+                  required:
+                  - name
+                  type: object
+                theme:
+                  properties:
+                    name:
+                      type: string
+                      description: Enter name of cardset name (e.g. IT, sport, music
+                        etc.)
+                      maxLength: 200
+                  required:
+                  - name
+                  type: object
+                name:
+                  type: string
+                  description: Name of cardset
+                  maxLength: 200
+                owner:
+                  type: integer
+                  nullable: true
+              required:
+              - to_language
+              - from_language
+              - theme
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id016
+          multipart/form-data:
+            schema: *id016
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  to_language:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  from_language:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  theme:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter name of cardset name (e.g. IT, sport, music
+                          etc.)
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  name:
+                    type: string
+                    description: Name of cardset
+                    maxLength: 200
+                  last_revision_date:
+                    type: string
+                    format: date
+                    readOnly: true
+                  owner:
+                    type: integer
+                    nullable: true
+                required:
+                - to_language
+                - from_language
+                - theme
+                - name
+          description: ''
+  /cardsets/{id}/:
+    get:
+      operationId: retrieveCardset
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this cardset.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  to_language:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  from_language:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  theme:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter name of cardset name (e.g. IT, sport, music
+                          etc.)
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  name:
+                    type: string
+                    description: Name of cardset
+                    maxLength: 200
+                  last_revision_date:
+                    type: string
+                    format: date
+                    readOnly: true
+                  owner:
+                    type: integer
+                    nullable: true
+                required:
+                - to_language
+                - from_language
+                - theme
+                - name
+          description: ''
+    put:
+      operationId: updateCardset
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this cardset.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id017
+              properties:
+                to_language:
+                  properties:
+                    name:
+                      type: string
+                      description: Enter the language name (e.g. English, Russian,
+                        German etc.), max symbols - 200
+                      maxLength: 200
+                  required:
+                  - name
+                  type: object
+                from_language:
+                  properties:
+                    name:
+                      type: string
+                      description: Enter the language name (e.g. English, Russian,
+                        German etc.), max symbols - 200
+                      maxLength: 200
+                  required:
+                  - name
+                  type: object
+                theme:
+                  properties:
+                    name:
+                      type: string
+                      description: Enter name of cardset name (e.g. IT, sport, music
+                        etc.)
+                      maxLength: 200
+                  required:
+                  - name
+                  type: object
+                name:
+                  type: string
+                  description: Name of cardset
+                  maxLength: 200
+                owner:
+                  type: integer
+                  nullable: true
+              required:
+              - to_language
+              - from_language
+              - theme
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id017
+          multipart/form-data:
+            schema: *id017
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  to_language:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  from_language:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  theme:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter name of cardset name (e.g. IT, sport, music
+                          etc.)
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  name:
+                    type: string
+                    description: Name of cardset
+                    maxLength: 200
+                  last_revision_date:
+                    type: string
+                    format: date
+                    readOnly: true
+                  owner:
+                    type: integer
+                    nullable: true
+                required:
+                - to_language
+                - from_language
+                - theme
+                - name
+          description: ''
+    patch:
+      operationId: partial_updateCardset
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this cardset.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id018
+              properties:
+                to_language:
+                  properties:
+                    name:
+                      type: string
+                      description: Enter the language name (e.g. English, Russian,
+                        German etc.), max symbols - 200
+                      maxLength: 200
+                  required:
+                  - name
+                  type: object
+                from_language:
+                  properties:
+                    name:
+                      type: string
+                      description: Enter the language name (e.g. English, Russian,
+                        German etc.), max symbols - 200
+                      maxLength: 200
+                  required:
+                  - name
+                  type: object
+                theme:
+                  properties:
+                    name:
+                      type: string
+                      description: Enter name of cardset name (e.g. IT, sport, music
+                        etc.)
+                      maxLength: 200
+                  required:
+                  - name
+                  type: object
+                name:
+                  type: string
+                  description: Name of cardset
+                  maxLength: 200
+                owner:
+                  type: integer
+                  nullable: true
+          application/x-www-form-urlencoded:
+            schema: *id018
+          multipart/form-data:
+            schema: *id018
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  to_language:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  from_language:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  theme:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter name of cardset name (e.g. IT, sport, music
+                          etc.)
+                        maxLength: 200
+                    required:
+                    - name
+                    type: object
+                  name:
+                    type: string
+                    description: Name of cardset
+                    maxLength: 200
+                  last_revision_date:
+                    type: string
+                    format: date
+                    readOnly: true
+                  owner:
+                    type: integer
+                    nullable: true
+                required:
+                - to_language
+                - from_language
+                - theme
+                - name
+          description: ''
+    delete:
+      operationId: destroyCardset
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this cardset.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /cards/:
+    get:
+      operationId: listCards
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        url:
+                          type: string
+                          readOnly: true
+                        cardset:
+                          type: string
+                          nullable: true
+                        native_word:
+                          type: string
+                          nullable: true
+                        translate_word:
+                          type: string
+                          nullable: true
+          description: ''
+    post:
+      operationId: createCard
+      description: API endpoint that allows users to be viewed or edited.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id019
+              properties:
+                cardset:
+                  type: string
+                  nullable: true
+                native_word:
+                  type: string
+                  nullable: true
+                translate_word:
+                  type: string
+                  nullable: true
+          application/x-www-form-urlencoded:
+            schema: *id019
+          multipart/form-data:
+            schema: *id019
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  cardset:
+                    type: string
+                    nullable: true
+                  native_word:
+                    type: string
+                    nullable: true
+                  translate_word:
+                    type: string
+                    nullable: true
+          description: ''
+  /cards/{id}/:
+    get:
+      operationId: retrieveCard
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this card.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  cardset:
+                    type: string
+                    nullable: true
+                  native_word:
+                    type: string
+                    nullable: true
+                  translate_word:
+                    type: string
+                    nullable: true
+          description: ''
+    put:
+      operationId: updateCard
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this card.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id020
+              properties:
+                cardset:
+                  type: string
+                  nullable: true
+                native_word:
+                  type: string
+                  nullable: true
+                translate_word:
+                  type: string
+                  nullable: true
+          application/x-www-form-urlencoded:
+            schema: *id020
+          multipart/form-data:
+            schema: *id020
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  cardset:
+                    type: string
+                    nullable: true
+                  native_word:
+                    type: string
+                    nullable: true
+                  translate_word:
+                    type: string
+                    nullable: true
+          description: ''
+    patch:
+      operationId: partial_updateCard
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this card.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id021
+              properties:
+                cardset:
+                  type: string
+                  nullable: true
+                native_word:
+                  type: string
+                  nullable: true
+                translate_word:
+                  type: string
+                  nullable: true
+          application/x-www-form-urlencoded:
+            schema: *id021
+          multipart/form-data:
+            schema: *id021
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    readOnly: true
+                  cardset:
+                    type: string
+                    nullable: true
+                  native_word:
+                    type: string
+                    nullable: true
+                  translate_word:
+                    type: string
+                    nullable: true
+          description: ''
+    delete:
+      operationId: destroyCard
+      description: API endpoint that allows users to be viewed or edited.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this card.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /profiles/:
+    get:
+      operationId: listProfiles
+      description: API endpoint that allows to get full user infomation
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        avatar:
+                          type: string
+                          format: binary
+                        languages_know:
+                          type: array
+                          items:
+                            properties:
+                              name:
+                                type: string
+                                description: Enter the language name (e.g. English,
+                                  Russian, German etc.), max symbols - 200
+                                maxLength: 200
+                            required:
+                            - name
+                        languages_learn:
+                          type: array
+                          items:
+                            properties:
+                              name:
+                                type: string
+                                description: Enter the language name (e.g. English,
+                                  Russian, German etc.), max symbols - 200
+                                maxLength: 200
+                            required:
+                            - name
+                        user:
+                          properties:
+                            id:
+                              type: integer
+                              readOnly: true
+                            url:
+                              type: string
+                              readOnly: true
+                            username:
+                              type: string
+                              description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\
+                                \u043B\u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435\
+                                . \u041D\u0435 \u0431\u043E\u043B\u0435\u0435 150\
+                                \ \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432\
+                                . \u0422\u043E\u043B\u044C\u043A\u043E \u0431\u0443\
+                                \u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                                \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B\
+                                \ @/./+/-/_."
+                              pattern: ^[\w.@+-]+\Z
+                              maxLength: 150
+                            last_name:
+                              type: string
+                              maxLength: 150
+                            first_name:
+                              type: string
+                              maxLength: 30
+                            is_active:
+                              type: boolean
+                              description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\
+                                \u0435, \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\
+                                \u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\
+                                \ \u0434\u043E\u043B\u0436\u0435\u043D \u0441\u0447\
+                                \u0438\u0442\u0430\u0442\u044C\u0441\u044F \u0430\u043A\
+                                \u0442\u0438\u0432\u043D\u044B\u043C. \u0423\u0431\
+                                \u0435\u0440\u0438\u0442\u0435 \u044D\u0442\u0443\
+                                \ \u043E\u0442\u043C\u0435\u0442\u043A\u0443 \u0432\
+                                \u043C\u0435\u0441\u0442\u043E \u0443\u0434\u0430\u043B\
+                                \u0435\u043D\u0438\u044F \u0443\u0447\u0451\u0442\u043D\
+                                \u043E\u0439 \u0437\u0430\u043F\u0438\u0441\u0438."
+                            profile:
+                              type: string
+                              readOnly: true
+                          required:
+                          - username
+                          type: object
+                          readOnly: true
+                        birth_date:
+                          type: string
+                          format: date
+                          nullable: true
+                        hobbies:
+                          type: string
+                          maxLength: 200
+                        about_me:
+                          type: string
+                          nullable: true
+                      required:
+                      - avatar
+                      - languages_know
+                      - languages_learn
+          description: ''
+    post:
+      operationId: createProfile
+      description: API endpoint that allows to get full user infomation
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id022
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+                languages_know:
+                  type: array
+                  items:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                languages_learn:
+                  type: array
+                  items:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                birth_date:
+                  type: string
+                  format: date
+                  nullable: true
+                hobbies:
+                  type: string
+                  maxLength: 200
+                about_me:
+                  type: string
+                  nullable: true
+              required:
+              - avatar
+              - languages_know
+              - languages_learn
+          application/x-www-form-urlencoded:
+            schema: *id022
+          multipart/form-data:
+            schema: *id022
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  avatar:
+                    type: string
+                    format: binary
+                  languages_know:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter the language name (e.g. English, Russian,
+                            German etc.), max symbols - 200
+                          maxLength: 200
+                      required:
+                      - name
+                  languages_learn:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter the language name (e.g. English, Russian,
+                            German etc.), max symbols - 200
+                          maxLength: 200
+                      required:
+                      - name
+                  user:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      url:
+                        type: string
+                        readOnly: true
+                      username:
+                        type: string
+                        description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                          \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\
+                          \u0435 \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\
+                          \u0432\u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\
+                          \u043A\u043E \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\
+                          \u0444\u0440\u044B \u0438 \u0441\u0438\u043C\u0432\u043E\
+                          \u043B\u044B @/./+/-/_."
+                        pattern: ^[\w.@+-]+\Z
+                        maxLength: 150
+                      last_name:
+                        type: string
+                        maxLength: 150
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      is_active:
+                        type: boolean
+                        description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435\
+                          , \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\
+                          \u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\
+                          \u0436\u0435\u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\
+                          \u0441\u044F \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C\
+                          . \u0423\u0431\u0435\u0440\u0438\u0442\u0435 \u044D\u0442\
+                          \u0443 \u043E\u0442\u043C\u0435\u0442\u043A\u0443 \u0432\
+                          \u043C\u0435\u0441\u0442\u043E \u0443\u0434\u0430\u043B\u0435\
+                          \u043D\u0438\u044F \u0443\u0447\u0451\u0442\u043D\u043E\u0439\
+                          \ \u0437\u0430\u043F\u0438\u0441\u0438."
+                      profile:
+                        type: string
+                        readOnly: true
+                    required:
+                    - username
+                    type: object
+                    readOnly: true
+                  birth_date:
+                    type: string
+                    format: date
+                    nullable: true
+                  hobbies:
+                    type: string
+                    maxLength: 200
+                  about_me:
+                    type: string
+                    nullable: true
+                required:
+                - avatar
+                - languages_know
+                - languages_learn
+          description: ''
+  /profiles/{id}/:
+    get:
+      operationId: retrieveProfile
+      description: API endpoint that allows to get full user infomation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this profile.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  avatar:
+                    type: string
+                    format: binary
+                  languages_know:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter the language name (e.g. English, Russian,
+                            German etc.), max symbols - 200
+                          maxLength: 200
+                      required:
+                      - name
+                  languages_learn:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter the language name (e.g. English, Russian,
+                            German etc.), max symbols - 200
+                          maxLength: 200
+                      required:
+                      - name
+                  user:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      url:
+                        type: string
+                        readOnly: true
+                      username:
+                        type: string
+                        description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                          \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\
+                          \u0435 \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\
+                          \u0432\u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\
+                          \u043A\u043E \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\
+                          \u0444\u0440\u044B \u0438 \u0441\u0438\u043C\u0432\u043E\
+                          \u043B\u044B @/./+/-/_."
+                        pattern: ^[\w.@+-]+\Z
+                        maxLength: 150
+                      last_name:
+                        type: string
+                        maxLength: 150
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      is_active:
+                        type: boolean
+                        description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435\
+                          , \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\
+                          \u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\
+                          \u0436\u0435\u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\
+                          \u0441\u044F \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C\
+                          . \u0423\u0431\u0435\u0440\u0438\u0442\u0435 \u044D\u0442\
+                          \u0443 \u043E\u0442\u043C\u0435\u0442\u043A\u0443 \u0432\
+                          \u043C\u0435\u0441\u0442\u043E \u0443\u0434\u0430\u043B\u0435\
+                          \u043D\u0438\u044F \u0443\u0447\u0451\u0442\u043D\u043E\u0439\
+                          \ \u0437\u0430\u043F\u0438\u0441\u0438."
+                      profile:
+                        type: string
+                        readOnly: true
+                    required:
+                    - username
+                    type: object
+                    readOnly: true
+                  birth_date:
+                    type: string
+                    format: date
+                    nullable: true
+                  hobbies:
+                    type: string
+                    maxLength: 200
+                  about_me:
+                    type: string
+                    nullable: true
+                required:
+                - avatar
+                - languages_know
+                - languages_learn
+          description: ''
+    put:
+      operationId: updateProfile
+      description: API endpoint that allows to get full user infomation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this profile.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id023
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+                languages_know:
+                  type: array
+                  items:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                languages_learn:
+                  type: array
+                  items:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                birth_date:
+                  type: string
+                  format: date
+                  nullable: true
+                hobbies:
+                  type: string
+                  maxLength: 200
+                about_me:
+                  type: string
+                  nullable: true
+              required:
+              - avatar
+              - languages_know
+              - languages_learn
+          application/x-www-form-urlencoded:
+            schema: *id023
+          multipart/form-data:
+            schema: *id023
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  avatar:
+                    type: string
+                    format: binary
+                  languages_know:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter the language name (e.g. English, Russian,
+                            German etc.), max symbols - 200
+                          maxLength: 200
+                      required:
+                      - name
+                  languages_learn:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter the language name (e.g. English, Russian,
+                            German etc.), max symbols - 200
+                          maxLength: 200
+                      required:
+                      - name
+                  user:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      url:
+                        type: string
+                        readOnly: true
+                      username:
+                        type: string
+                        description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                          \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\
+                          \u0435 \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\
+                          \u0432\u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\
+                          \u043A\u043E \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\
+                          \u0444\u0440\u044B \u0438 \u0441\u0438\u043C\u0432\u043E\
+                          \u043B\u044B @/./+/-/_."
+                        pattern: ^[\w.@+-]+\Z
+                        maxLength: 150
+                      last_name:
+                        type: string
+                        maxLength: 150
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      is_active:
+                        type: boolean
+                        description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435\
+                          , \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\
+                          \u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\
+                          \u0436\u0435\u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\
+                          \u0441\u044F \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C\
+                          . \u0423\u0431\u0435\u0440\u0438\u0442\u0435 \u044D\u0442\
+                          \u0443 \u043E\u0442\u043C\u0435\u0442\u043A\u0443 \u0432\
+                          \u043C\u0435\u0441\u0442\u043E \u0443\u0434\u0430\u043B\u0435\
+                          \u043D\u0438\u044F \u0443\u0447\u0451\u0442\u043D\u043E\u0439\
+                          \ \u0437\u0430\u043F\u0438\u0441\u0438."
+                      profile:
+                        type: string
+                        readOnly: true
+                    required:
+                    - username
+                    type: object
+                    readOnly: true
+                  birth_date:
+                    type: string
+                    format: date
+                    nullable: true
+                  hobbies:
+                    type: string
+                    maxLength: 200
+                  about_me:
+                    type: string
+                    nullable: true
+                required:
+                - avatar
+                - languages_know
+                - languages_learn
+          description: ''
+    patch:
+      operationId: partial_updateProfile
+      description: API endpoint that allows to get full user infomation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this profile.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id024
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+                languages_know:
+                  type: array
+                  items:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                languages_learn:
+                  type: array
+                  items:
+                    properties:
+                      name:
+                        type: string
+                        description: Enter the language name (e.g. English, Russian,
+                          German etc.), max symbols - 200
+                        maxLength: 200
+                    required:
+                    - name
+                birth_date:
+                  type: string
+                  format: date
+                  nullable: true
+                hobbies:
+                  type: string
+                  maxLength: 200
+                about_me:
+                  type: string
+                  nullable: true
+          application/x-www-form-urlencoded:
+            schema: *id024
+          multipart/form-data:
+            schema: *id024
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  avatar:
+                    type: string
+                    format: binary
+                  languages_know:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter the language name (e.g. English, Russian,
+                            German etc.), max symbols - 200
+                          maxLength: 200
+                      required:
+                      - name
+                  languages_learn:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                          description: Enter the language name (e.g. English, Russian,
+                            German etc.), max symbols - 200
+                          maxLength: 200
+                      required:
+                      - name
+                  user:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      url:
+                        type: string
+                        readOnly: true
+                      username:
+                        type: string
+                        description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                          \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\
+                          \u0435 \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\
+                          \u0432\u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\
+                          \u043A\u043E \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\
+                          \u0444\u0440\u044B \u0438 \u0441\u0438\u043C\u0432\u043E\
+                          \u043B\u044B @/./+/-/_."
+                        pattern: ^[\w.@+-]+\Z
+                        maxLength: 150
+                      last_name:
+                        type: string
+                        maxLength: 150
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      is_active:
+                        type: boolean
+                        description: "\u041E\u0442\u043C\u0435\u0442\u044C\u0442\u0435\
+                          , \u0435\u0441\u043B\u0438 \u043F\u043E\u043B\u044C\u0437\
+                          \u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\
+                          \u0436\u0435\u043D \u0441\u0447\u0438\u0442\u0430\u0442\u044C\
+                          \u0441\u044F \u0430\u043A\u0442\u0438\u0432\u043D\u044B\u043C\
+                          . \u0423\u0431\u0435\u0440\u0438\u0442\u0435 \u044D\u0442\
+                          \u0443 \u043E\u0442\u043C\u0435\u0442\u043A\u0443 \u0432\
+                          \u043C\u0435\u0441\u0442\u043E \u0443\u0434\u0430\u043B\u0435\
+                          \u043D\u0438\u044F \u0443\u0447\u0451\u0442\u043D\u043E\u0439\
+                          \ \u0437\u0430\u043F\u0438\u0441\u0438."
+                      profile:
+                        type: string
+                        readOnly: true
+                    required:
+                    - username
+                    type: object
+                    readOnly: true
+                  birth_date:
+                    type: string
+                    format: date
+                    nullable: true
+                  hobbies:
+                    type: string
+                    maxLength: 200
+                  about_me:
+                    type: string
+                    nullable: true
+                required:
+                - avatar
+                - languages_know
+                - languages_learn
+          description: ''
+    delete:
+      operationId: destroyProfile
+      description: API endpoint that allows to get full user infomation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this profile.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /auth/users/:
+    get:
+      operationId: listUsers
+      description: ''
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 123
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      properties:
+                        email:
+                          type: string
+                          format: email
+                          maxLength: 254
+                        id:
+                          type: integer
+                          readOnly: true
+                        username:
+                          type: string
+                          readOnly: true
+                          description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\
+                            \u043B\u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435\
+                            . \u041D\u0435 \u0431\u043E\u043B\u0435\u0435 150 \u0441\
+                            \u0438\u043C\u0432\u043E\u043B\u043E\u0432. \u0422\u043E\
+                            \u043B\u044C\u043A\u043E \u0431\u0443\u043A\u0432\u044B\
+                            , \u0446\u0438\u0444\u0440\u044B \u0438 \u0441\u0438\u043C\
+                            \u0432\u043E\u043B\u044B @/./+/-/_."
+          description: ''
+    post:
+      operationId: createUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id025
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                username:
+                  type: string
+                  description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\
+                    \u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435 \u0431\
+                    \u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\u043E\u043B\
+                    \u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E \u0431\u0443\
+                    \u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B \u0438 \u0441\
+                    \u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                password:
+                  type: string
+                  writeOnly: true
+              required:
+              - username
+              - password
+          application/x-www-form-urlencoded:
+            schema: *id025
+          multipart/form-data:
+            schema: *id025
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  username:
+                    type: string
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  id:
+                    type: integer
+                    readOnly: true
+                required:
+                - username
+          description: ''
+  /auth/users/me/:
+    get:
+      operationId: meUser
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+          description: ''
+    put:
+      operationId: meUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id026
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+          application/x-www-form-urlencoded:
+            schema: *id026
+          multipart/form-data:
+            schema: *id026
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+          description: ''
+    patch:
+      operationId: meUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id027
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+          application/x-www-form-urlencoded:
+            schema: *id027
+          multipart/form-data:
+            schema: *id027
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+          description: ''
+    delete:
+      operationId: meUser
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /auth/users/{id}/:
+    get:
+      operationId: retrieveUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u043F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+          description: ''
+    put:
+      operationId: updateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u043F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id028
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+          application/x-www-form-urlencoded:
+            schema: *id028
+          multipart/form-data:
+            schema: *id028
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+          description: ''
+    patch:
+      operationId: partial_updateUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u043F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id029
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+          application/x-www-form-urlencoded:
+            schema: *id029
+          multipart/form-data:
+            schema: *id029
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    readOnly: true
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+          description: ''
+    delete:
+      operationId: destroyUser
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: "A unique integer value identifying this \u043F\u043E\u043B\u044C\
+          \u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C."
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /auth/users/activation/:
+    post:
+      operationId: activationUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id030
+              properties:
+                uid:
+                  type: string
+                token:
+                  type: string
+              required:
+              - uid
+              - token
+          application/x-www-form-urlencoded:
+            schema: *id030
+          multipart/form-data:
+            schema: *id030
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  uid:
+                    type: string
+                  token:
+                    type: string
+                required:
+                - uid
+                - token
+          description: ''
+  /auth/users/resend_activation/:
+    post:
+      operationId: resend_activationUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id031
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+              - email
+          application/x-www-form-urlencoded:
+            schema: *id031
+          multipart/form-data:
+            schema: *id031
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                required:
+                - email
+          description: ''
+  /auth/users/reset_password/:
+    post:
+      operationId: reset_passwordUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id032
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+              - email
+          application/x-www-form-urlencoded:
+            schema: *id032
+          multipart/form-data:
+            schema: *id032
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                required:
+                - email
+          description: ''
+  /auth/users/reset_password_confirm/:
+    post:
+      operationId: reset_password_confirmUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id033
+              properties:
+                uid:
+                  type: string
+                token:
+                  type: string
+                new_password:
+                  type: string
+              required:
+              - uid
+              - token
+              - new_password
+          application/x-www-form-urlencoded:
+            schema: *id033
+          multipart/form-data:
+            schema: *id033
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  uid:
+                    type: string
+                  token:
+                    type: string
+                  new_password:
+                    type: string
+                required:
+                - uid
+                - token
+                - new_password
+          description: ''
+  /auth/users/reset_username/:
+    post:
+      operationId: reset_usernameUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id034
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+              - email
+          application/x-www-form-urlencoded:
+            schema: *id034
+          multipart/form-data:
+            schema: *id034
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                required:
+                - email
+          description: ''
+  /auth/users/reset_username_confirm/:
+    post:
+      operationId: reset_username_confirmUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id035
+              properties:
+                new_username:
+                  type: string
+                  description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\
+                    \u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435 \u0431\
+                    \u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\u043E\u043B\
+                    \u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E \u0431\u0443\
+                    \u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B \u0438 \u0441\
+                    \u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+              required:
+              - new_username
+          application/x-www-form-urlencoded:
+            schema: *id035
+          multipart/form-data:
+            schema: *id035
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  new_username:
+                    type: string
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                required:
+                - new_username
+          description: ''
+  /auth/users/set_password/:
+    post:
+      operationId: set_passwordUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id036
+              properties:
+                new_password:
+                  type: string
+                current_password:
+                  type: string
+              required:
+              - new_password
+              - current_password
+          application/x-www-form-urlencoded:
+            schema: *id036
+          multipart/form-data:
+            schema: *id036
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  new_password:
+                    type: string
+                  current_password:
+                    type: string
+                required:
+                - new_password
+                - current_password
+          description: ''
+  /auth/users/set_username/:
+    post:
+      operationId: set_usernameUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id037
+              properties:
+                new_username:
+                  type: string
+                  description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\
+                    \u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435 \u0431\
+                    \u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\u043E\u043B\
+                    \u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E \u0431\u0443\
+                    \u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B \u0438 \u0441\
+                    \u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+              required:
+              - new_username
+          application/x-www-form-urlencoded:
+            schema: *id037
+          multipart/form-data:
+            schema: *id037
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  new_username:
+                    type: string
+                    description: "\u041E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\
+                      \u044C\u043D\u043E\u0435 \u043F\u043E\u043B\u0435. \u041D\u0435\
+                      \ \u0431\u043E\u043B\u0435\u0435 150 \u0441\u0438\u043C\u0432\
+                      \u043E\u043B\u043E\u0432. \u0422\u043E\u043B\u044C\u043A\u043E\
+                      \ \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B\
+                      \ \u0438 \u0441\u0438\u043C\u0432\u043E\u043B\u044B @/./+/-/_."
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                required:
+                - new_username
+          description: ''
+  /auth/jwt/create/:
+    post:
+      operationId: CreateTokenObtainPair
+      description: 'Takes a set of user credentials and returns an access and refresh
+        JSON web
+
+        token pair to prove the authentication of those credentials.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id038
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  writeOnly: true
+              required:
+              - username
+              - password
+          application/x-www-form-urlencoded:
+            schema: *id038
+          multipart/form-data:
+            schema: *id038
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  username:
+                    type: string
+                required:
+                - username
+          description: ''
+  /auth/jwt/refresh/:
+    post:
+      operationId: CreateTokenRefresh
+      description: 'Takes a refresh type JSON web token and returns an access type
+        JSON web
+
+        token if the refresh token is valid.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id039
+              properties:
+                refresh:
+                  type: string
+              required:
+              - refresh
+          application/x-www-form-urlencoded:
+            schema: *id039
+          multipart/form-data:
+            schema: *id039
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  refresh:
+                    type: string
+                required:
+                - refresh
+          description: ''
+  /auth/jwt/verify/:
+    post:
+      operationId: CreateTokenVerify
+      description: 'Takes a token and indicates if it is valid.  This view provides
+        no
+
+        information about a token''s fitness for a particular use.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id040
+              properties:
+                token:
+                  type: string
+              required:
+              - token
+          application/x-www-form-urlencoded:
+            schema: *id040
+          multipart/form-data:
+            schema: *id040
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  token:
+                    type: string
+                required:
+                - token
+          description: ''

@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 class Language(models.Model):
     name = models.CharField(
         max_length=200,
-        help_text=_("Enter the language name (e.g. English, Russian, German etc.)")
+        help_text=_("Enter the language name (e.g. English, Russian, German etc.), max symbols - 200")
     )
 
     def __str__(self):
@@ -20,7 +20,7 @@ class Word(models.Model):
     #language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
     name = models.CharField(
         max_length=200,
-        help_text=_("Enter word")
+        help_text=_("A string value that represents word, max symbols - 200")
     )
 
     def __str__(self):
