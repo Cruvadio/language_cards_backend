@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-from backend.serializers import LanguageSerializer, ThemeSerializer
-from users.serializers import UserGetSerializer
+from core.serializers import LanguageSerializer
 from .models import *
 
 
@@ -19,7 +18,7 @@ class CardsetSerializer(serializers.ModelSerializer):
     to_language = LanguageSerializer(many=False)
     from_language = LanguageSerializer(many=False)
     #owner = UserGetSerializer(many=False)
-    theme = ThemeSerializer(many=False)
+    theme = serializers.SlugRelatedField(many=True, slug_field='name', queryset=Theme.objects.all())
 
     class Meta:
         model = Cardset

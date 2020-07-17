@@ -1,17 +1,24 @@
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from backend.serializers import LanguageSerializer
 from users.models import Profile
+from cards.models import Language
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserCreateSerializer(serializers.ModelSerializer):
 
-    date_joined = serializers.ReadOnlyField()
 
     class Meta:
         model = User
-        fields = ['username', 'last_name', 'first_name', 'date_joined', 'email', 'groups', 'password']
+        fields = ['username', 'email', 'last_name', 'first_name', 'password']
         extra_kwards = {'password' : {'write_only': True}}
+
+
+    def create(self, validated_data):
+        user = User(**validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
 
 class UserGetSerializer(serializers.HyperlinkedModelSerializer):
@@ -27,16 +34,45 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    avatar = serializers.ImageField(use_url=True)
-    languages_know = LanguageSerializer(many=True)
-    languages_learn = LanguageSerializer(many=True)
+class ProfileSerializerDetail(serializers.ModelSerializer):
+    avatar_small = serializers.ImageField(read_only=True)
+    avatar_medium = serializers.ImageField(read_only=True)
+    avatar_big = serializers.ImageField(read_only=True)
+
+    languages_know = serializers.SlugRelatedField(queryset=Language.objects.all().order_by('name'), slug_field='name', many=True, required=False)
+    languages_learn = serializers.SlugRelatedField(queryset=Language.objects.all().order_by('name'), slug_field='name', many=True, required=False)
     user = UserGetSerializer(many=False, read_only=True)
-    #age = serializers.SerializerMethodField()
+    age = serializers.SerializerMethodField()
 
     class Meta:
-        fields = '__all__'
+        exclude = ['avatar']
         model = Profile
 
     def get_age(self, obj):
         return obj.age
+
+class ProfileEditSerializerDetail(serializers.ModelSerializer):
+
+    class Meta:
+        fields = ['birth_date', 'hobbies', 'about_me']
+        model = Profile
+
+    def get_age(self, obj):
+        return obj.age
+
+
+class ProfileSerializer (serializers.ModelSerializer):
+    avatar_small = serializers.ImageField(use_url=True)
+    user = UserGetSerializer(many=False, read_only=True)
+    class Meta:
+        fields = ['id', 'avatar_small', 'user']
+        model = Profile
+
+
+class PhotosProfileSerializer (serializers.HyperlinkedModelSerializer):
+    avatar_small = serializers.ImageField()
+    avatar_medium = serializers.ImageField()
+    avatar_big = serializers.ImageField()
+    class Meta:
+        fields = ['avatar_small', 'avatar_medium', 'avatar_big']
+        model = Profile

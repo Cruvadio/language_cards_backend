@@ -5,24 +5,38 @@ from django.db import transaction
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
-from datetime import timedelta
+from imagekit.models.fields import ImageSpecField
+from imagekit.processors import ResizeToFit, Adjust, ResizeToFill
+from datetime import date
 from django.contrib.auth.models import User
 from cards.models import Language
 # Create your models here.
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to="images/", null=True , blank=True)
-    birth_date = models.DateField(null=True, blank=True)
-    hobbies = models.CharField(max_length=200, blank=True)
-    languages_know = models.ManyToManyField(Language, related_name="know_languages", blank=True)
-    languages_learn = models.ManyToManyField(Language, related_name='learn_languages', blank=True)
-    about_me = models.TextField(null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, help_text=_('This is the user, related to this profile'))
+
+    avatar = models.ImageField(upload_to="images/avatars/", null=True , blank=True, help_text=_('Avatar, picture'))
+    avatar_small = ImageSpecField([ResizeToFill(100, 100)], format='JPEG', options={'quality': 90}, source='avatar')
+    avatar_medium = ImageSpecField([ResizeToFill(300, 300)], format='JPEG', options={'quality': 90}, source='avatar')
+    avatar_big = ImageSpecField([ResizeToFill(500, 500)], format='JPEG', options={'quality': 90}, source='avatar')
+
+    birth_date = models.DateField(null=True, blank=True, help_text=_('Date, when user is born'))
+    hobbies = models.CharField(max_length=200, blank=True, help_text=_('Hobbies of person, max length = 200'))
+    languages_know = models.ManyToManyField(Language, related_name="know_languages", blank=True, help_text=_('Languages person already know'))
+    languages_learn = models.ManyToManyField(Language, related_name='learn_languages', blank=True, help_text=_('Languages person would like to learn'))
+    about_me = models.TextField(null=True, blank=True, help_text=_('Some information about person'))
 
     @property
     def age(self):
-        return (timezone.now().date() - self.birth_date).year
+        if not self.birth_date:
+            return None
+        today = date.today()
+        return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
+
+    class Meta:
+        verbose_name = _('profile')
+        verbose_name_plural = _('profiles')
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -31,6 +45,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, created, **kwargs):
-        instance.profile.save()
+    instance.profile.save()
 
 

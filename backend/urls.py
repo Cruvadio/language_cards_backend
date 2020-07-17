@@ -17,10 +17,9 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from rest_framework import routers
 from django.urls import path, include
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView, TokenVerifyView,
-)
+from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls
+
 
 from backend import settings
 from users import views as uv
@@ -36,10 +35,19 @@ router.register(r'cardsets', cv.CardsetViewSet, basename="Cardset")
 router.register(r'cards', cv.CardViewSet)
 router.register(r'profiles', uv.ProfileViewSet)
 
+API_TITLE = 'Language Cards API'
+API_DESCRIPTION = 'A Web API for language cards web-site.'
+
+shema_view = get_schema_view(title=API_TITLE, version=1.0)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-    #path('auth/', include("users.urls")),
-    path('auth/', include("djoser.urls")),
-    path('auth/', include("djoser.urls.jwt")),
+    path('api/v1/', include(router.urls)),
+   # path('api/v1/profile/language', uv.set_language, name='set_language'),
+    path('api/v1/auth/', include("djoser.urls")),
+    path('api/v1/auth/', include("djoser.urls.jwt")),
+    path('api/v1/auth/blacklist/', uv.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='blacklist'),
+    path('shema/', shema_view),
+    path('docs/', include_docs_urls(title=API_TITLE,
+                                    description=API_DESCRIPTION)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -9,32 +9,47 @@ from django.utils.translation import ugettext_lazy as _
 class Language(models.Model):
     name = models.CharField(
         max_length=200,
-        help_text=_("Enter the language name (e.g. English, Russian, German etc.), max symbols - 200")
+        help_text=_("Enter the language name (e.g. English, Russian, German etc.), max symbols - 200"),
+        unique=True
     )
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('language')
+        verbose_name_plural = _('languages')
 
 
 class Word(models.Model):
     #language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
     name = models.CharField(
         max_length=200,
-        help_text=_("A string value that represents word, max symbols - 200")
+        help_text=_("A string value that represents word, max symbols - 200"),
+        unique=True
     )
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('word')
+        verbose_name_plural = _('words')
 
 
 class Theme(models.Model):
     name = models.CharField(
         max_length=200,
-        help_text=_("Enter name of cardset name (e.g. IT, sport, music etc.)")
+        help_text=_("Enter name of cardset name (e.g. IT, sport, music etc.)"),
+        unique=True
     )
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('theme')
+        verbose_name_plural = _('themes')
 
 
 class Cardset(models.Model):
@@ -48,6 +63,10 @@ class Cardset(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('card set')
+        verbose_name_plural = _('card sets')
+
 
 class Card(models.Model):
     cardset = models.ForeignKey('Cardset', on_delete=models.SET_NULL, null=True)
@@ -56,3 +75,6 @@ class Card(models.Model):
 
     def __str__(self):
         return '({0},{1})'.format(self.native_word.name, self.translate_word.name)
+    class Meta:
+        verbose_name = _('card')
+        verbose_name_plural = _('cards')
