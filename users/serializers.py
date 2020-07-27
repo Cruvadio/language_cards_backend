@@ -45,8 +45,9 @@ class ProfileSerializerDetail(serializers.ModelSerializer):
     age = serializers.SerializerMethodField()
 
     class Meta:
-        exclude = ['avatar']
+        exclude = ['avatar', 'followings']
         model = Profile
+
 
     def get_age(self, obj):
         return obj.age
@@ -64,9 +65,20 @@ class ProfileEditSerializerDetail(serializers.ModelSerializer):
 class ProfileSerializer (serializers.ModelSerializer):
     avatar_small = serializers.ImageField(use_url=True)
     user = UserGetSerializer(many=False, read_only=True)
+    is_followed = serializers.SerializerMethodField()
+
     class Meta:
-        fields = ['id', 'avatar_small', 'user']
+        fields = ['id', 'avatar_small', 'user', 'is_followed']
         model = Profile
+
+    def get_is_followed (self, obj):
+        user = None
+        request = self.context.get('request')
+        if request and hasattr(request, 'user'):
+            user = request.user
+            return obj.is_followed(user)
+        return False
+
 
 
 class PhotosProfileSerializer (serializers.HyperlinkedModelSerializer):

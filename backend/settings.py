@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'cards.apps.CardsConfig',
     'users.apps.UsersConfig',
     'core.apps.CoreConfig',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -146,11 +147,10 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
 )
 from corsheaders.defaults import default_headers
+
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "content-disposition",
 ]
-
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -169,8 +169,6 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
-
-
 
 DJOSER = {
     'SERIALIZERS': {

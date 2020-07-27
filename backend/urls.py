@@ -47,6 +47,7 @@ urlpatterns = [
     path('api/v1/auth/', include("djoser.urls")),
     path('api/v1/auth/', include("djoser.urls.jwt")),
     path('api/v1/auth/blacklist/', uv.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='blacklist'),
+    path('api/v1/friends/', uv.FriendsListAPI.as_view(), name='friends'),
     path('shema/', shema_view),
     path('docs/', include_docs_urls(title=API_TITLE,
                                     description=API_DESCRIPTION)),

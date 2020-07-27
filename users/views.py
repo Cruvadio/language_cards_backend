@@ -1,9 +1,11 @@
 from PIL import Image
 from django.contrib.auth.models import User, Group
 from django.utils.translation import ugettext_lazy as _
+from django_filters import rest_framework as filters
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import ParseError
+from rest_framework.generics import ListAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -11,6 +13,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from cards.models import Cardset, Language
+from .filters import ProfileFilter
 from .models import Profile
 from .permissions import IsReadOnlyOrIsOwner
 from .schemas import *
@@ -25,15 +28,31 @@ WRONG_JSON_ERROR = _("Wrong JSON. Please read API documentation: ") + API_URL
 
 
 
+class FriendsListAPI (ListAPIView):
+
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+
+    def get_queryset(self):
+        user = self.request.user
+        if (user):
+            queryset = user.profile.get_friends()
+            return queryset
+        return None
+
+
 class ProfileViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows to get full user infomation
     """
-    queryset = Profile.objects.all()
-    permission_classes = [IsReadOnlyOrIsOwner, ]
+    queryset = Profile.objects.all().order_by('user__last_login')
+    permission_classes = [IsReadOnlyOrIsOwner, IsAuthenticated]
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = ProfileFilter
 
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action == 'list' or self.action == 'toggle_follow':
             return ProfileSerializer
         elif self.action == 'change_avatar':
             return PhotosProfileSerializer
@@ -63,8 +82,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
                 profile.hobbies = data.validated_data["hobbies"]
                 profile.about_me = data.validated_data["about_me"]
                 profile.birth_date = data.validated_data["birth_date"]
-                languages_know = map(lambda x: Language.objects.get(name=x), request.data['languages_know'])
-                languages_learn = map(lambda x: Language.objects.get(name=x), request.data['languages_learn'])
+                languages_know = Language.objects.filter(name__in=request.data['languages_know'])
+                languages_learn = Language.objects.filter(name__in=request.data['languages_learn'])
                 profile.languages_know.set(languages_know)
                 profile.languages_learn.set(languages_learn)
                 profile.save()
@@ -78,6 +97,27 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return Response(res, status=status.HTTP_404_NOT_FOUND)
 
 
+    @action(detail=True,
+            url_path='follow',
+            url_name='toggle_follow',
+            methods=['post', 'delete'],
+            schema=toggle_follow_schema,
+            permission_classes=[IsReadOnlyOrIsOwner, IsAuthenticated]
+            )
+    def toggle_follow(self, request, pk=None):
+        try:
+            me = request.user
+            user = User.objects.get(id=pk)
+            serializer = self.get_serializer(user.profile)
+            if request.method == 'POST':
+                me.profile.add_following(user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            elif request.method == 'DELETE':
+                me.profile.delete_following(user)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception:
+            return Response({"message" : "User not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False,
             url_path='language',
@@ -94,7 +134,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
         """
         try:
             user = request.user
-            languages = map(lambda x: Language.objects.get(name=x), request.data['languages'])
+            languages = Language.objects.filter(name__in=request.data['languages'])
             field_name = request.data['field']
             if request.data['action'] == 'ADD':
                 try:

@@ -1,7 +1,7 @@
 import coreapi
 import coreschema
-from rest_framework.schemas import ManualSchema
 from django.utils.translation import ugettext as _
+from rest_framework.schemas import ManualSchema
 
 profile_languages_schema = ManualSchema(
     fields=[
@@ -20,16 +20,17 @@ profile_languages_schema = ManualSchema(
             location="form",
             schema=coreschema.String(
                 title=_("Field name"),
-                description=_("'language_know' to /delete languages to/from known by user, 'languagle_learn' to add/delete languages to/from languages learning by user")
+                description=_(
+                    "'language_know' to /delete languages to/from known by user, 'languagle_learn' to add/delete languages to/from languages learning by user")
             )
         ),
-            coreapi.Field(
+        coreapi.Field(
             "languages",
             required=True,
             location="form",
-                schema=coreschema.Array(
-                    title=_("Languages"),
-                    description=_('Languages written capitalized in English (e.q. English, Russian, etc.)')),
+            schema=coreschema.Array(
+                title=_("Languages"),
+                description=_('Languages written capitalized in English (e.q. English, Russian, etc.)')),
 
         ),
     ],
@@ -37,7 +38,6 @@ profile_languages_schema = ManualSchema(
     description=_("Endpoint for adding and deleting languages to/from current user."),
     encoding="application/json"
 )
-
 
 change_hobbies_schema = ManualSchema(
     fields=[
@@ -53,9 +53,8 @@ change_hobbies_schema = ManualSchema(
     ],
 
     description=_("Endpoint for changing user hobbies."),
-encoding="application/json"
+    encoding="application/json"
 )
-
 
 change_about_schema = ManualSchema(
     fields=[
@@ -71,9 +70,8 @@ change_about_schema = ManualSchema(
     ],
 
     description=_("Endpoint for changing user hobbies."),
-encoding="application/json"
+    encoding="application/json"
 )
-
 
 change_avatar_schema = ManualSchema(
     fields=[
@@ -89,9 +87,22 @@ change_avatar_schema = ManualSchema(
     ],
 
     description=_("Endpoint for uploading avatar."),
-encoding="multipart/form-data"
+    encoding="multipart/form-data"
 )
 
+toggle_follow_schema = ManualSchema(
+    fields=[
+        coreapi.Field(
+            "id",
+            required=True,
+            location='path',
+            schema=coreschema.String(
+                title=_("ID"),
+                description=_("A unique integer value identifying this profile.")
+            )
+        )
+    ],
 
-
-
+    description=_("Endpoint for following user."),
+    encoding="application/json"
+)
