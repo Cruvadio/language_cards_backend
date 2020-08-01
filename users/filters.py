@@ -1,9 +1,9 @@
 import datetime
-from django.db.models import QuerySet
-from django_filters import rest_framework as filters
-import itertools
+
 from django.db.models import Q
-from users.models import Profile
+from django_filters import rest_framework as filters
+
+from .models import Profile
 
 
 class ProfileFilter(filters.FilterSet):
@@ -24,7 +24,6 @@ class ProfileFilter(filters.FilterSet):
     def filter_max_age(self, queryset, name, value):
         today = datetime.date.today()
         date = datetime.date(today.year - value, today.month, today.day)
-        print(date)
         return queryset.filter(Q(birth_date__year__gt=date.year) |
                                (Q(birth_date__year=date.year) & (Q(birth_date__month__lt=today.month) |
                                                                  (Q(birth_date__month=today.month) & Q(
@@ -35,9 +34,9 @@ class ProfileFilter(filters.FilterSet):
         if type(value) is bool:
             profiles = user.profile.get_friends()
             if value:
-                return Profile.objects.filter(id__in=profiles)
+                return queryset.filter(id__in=profiles)
             else:
-                return Profile.objects.exclude(id__in=profiles)
-        return Profile.objects.all()
+                return queryset.exclude(id__in=profiles)
+        return queryset.all()
 
 

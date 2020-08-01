@@ -1,15 +1,16 @@
 from __future__ import unicode_literals
+
+from datetime import date
+
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.db import transaction
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.utils import timezone
 from imagekit.models.fields import ImageSpecField
-from imagekit.processors import ResizeToFit, Adjust, ResizeToFill
-from datetime import date
-from django.contrib.auth.models import User
+from imagekit.processors import ResizeToFill
+
 from cards.models import Language
+
+
 # Create your models here.
 
 
@@ -17,7 +18,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, help_text=_('This is the user, related to this profile'))
     status = models.CharField(null=True, blank=True, max_length=200, help_text=_("Person's current mood"))
 
-    followings = models.ManyToManyField(User, related_name="followers")
+    followings = models.ManyToManyField(User, related_name="followers", blank=True)
 
     avatar = models.ImageField(upload_to="images/avatars/", null=True , blank=True, help_text=_('Avatar, picture'))
     avatar_small = ImageSpecField([ResizeToFill(100, 100)], format='JPEG', options={'quality': 90}, source='avatar')
@@ -65,14 +66,5 @@ class Profile(models.Model):
     class Meta:
         verbose_name = _('profile')
         verbose_name_plural = _('profiles')
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, created, **kwargs):
-    instance.profile.save()
 
 

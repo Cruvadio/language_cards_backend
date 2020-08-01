@@ -5,7 +5,6 @@ from django_filters import rest_framework as filters
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import ParseError
-from rest_framework.generics import ListAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -26,20 +25,6 @@ API_URL = "http://localhost:8000/docs"
 WRONG_JSON_ERROR = _("Wrong JSON. Please read API documentation: ") + API_URL
 
 
-
-
-class FriendsListAPI (ListAPIView):
-
-    serializer_class = ProfileSerializer
-    permission_classes = [IsAuthenticated]
-
-
-    def get_queryset(self):
-        user = self.request.user
-        if (user):
-            queryset = user.profile.get_friends()
-            return queryset
-        return None
 
 
 class ProfileViewSet(viewsets.ModelViewSet):

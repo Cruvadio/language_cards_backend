@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'cards.apps.CardsConfig',
     'users.apps.UsersConfig',
     'core.apps.CoreConfig',
-    'django_filters'
+    'django_filters',
+    'chat.apps.ChatConfig'
 ]
 
 MIDDLEWARE = [
@@ -175,3 +176,7 @@ DJOSER = {
         "user_create": "users.serializers.UserCreateSerializer"
     },
 }
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locales')
+]

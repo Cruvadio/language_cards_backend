@@ -1,8 +1,8 @@
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from users.models import Profile
+
 from cards.models import Language
+from users.models import Profile
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -28,6 +28,9 @@ class UserGetSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'url', 'username', 'last_name', 'first_name', 'is_active', 'profile']
 
 
+
+
+
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
@@ -45,7 +48,7 @@ class ProfileSerializerDetail(serializers.ModelSerializer):
     age = serializers.SerializerMethodField()
 
     class Meta:
-        exclude = ['avatar', 'followings']
+        exclude = ['followings']
         model = Profile
 
 
@@ -68,7 +71,7 @@ class ProfileSerializer (serializers.ModelSerializer):
     is_followed = serializers.SerializerMethodField()
 
     class Meta:
-        fields = ['id', 'avatar_small', 'user', 'is_followed']
+        fields = ['id', 'avatar_small', 'user', 'status', 'is_followed']
         model = Profile
 
     def get_is_followed (self, obj):
@@ -81,6 +84,7 @@ class ProfileSerializer (serializers.ModelSerializer):
 
 
 
+
 class PhotosProfileSerializer (serializers.HyperlinkedModelSerializer):
     avatar_small = serializers.ImageField()
     avatar_medium = serializers.ImageField()
@@ -88,3 +92,4 @@ class PhotosProfileSerializer (serializers.HyperlinkedModelSerializer):
     class Meta:
         fields = ['avatar_small', 'avatar_medium', 'avatar_big']
         model = Profile
+
