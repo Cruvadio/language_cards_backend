@@ -1,0 +1,71 @@
+actions = [
+    SEND_MESSAGE,
+
+]
+
+
+send_message
+==============
+client:
+{
+    payload:{
+        text: string
+    }
+    action: ADD_MESSAGE
+}
+server:
+{
+    payload: {
+        message:{
+            dialog:
+            text:
+            sender:
+            date:
+            is_new:
+        }
+    }
+    action: ADD_MESSAGE
+}
+
+
+load_messages
+===============
+client:
+{
+    payload{
+        dialog: number (ID)
+        page: number
+        page_size: number
+    }
+    action: LOAD_MESSAGES
+}
+server:
+{
+    payload{
+        next_page: number
+        messages: [...]
+    }
+    action: LOAD_MESSAGES
+}
+
+
+read_message
+===============
+client:
+{
+    payload{
+        dialog: number (ID)
+        message: number (ID)
+    }
+    action: READ_MESSAGE
+}
+server:
+{
+    payload{
+        dialog: number (ID)
+        message: number (ID)
+    }
+    action: READ_MESSAGE
+}
+
+

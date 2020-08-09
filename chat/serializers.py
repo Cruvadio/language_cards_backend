@@ -29,10 +29,8 @@ class MessagesSerializerGet (serializers.ModelSerializer):
 
 
 class MessagesSerializerPost (serializers.ModelSerializer):
-    sender = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    dialog = serializers.PrimaryKeyRelatedField(queryset=Dialog.objects.all())
     class Meta:
-        fields = ['text', 'sender', 'dialog']
+        fields = ['text']
         model = Message
 
 
@@ -43,14 +41,6 @@ class DialogsSerializer (serializers.ModelSerializer):
         fields = ['id', 'type', 'participants', 'last_message']
         model = Dialog
 
-
-
-class DialogsSerializerDetail (serializers.ModelSerializer):
-    participants = UserMessagesSerializer(many=True)
-    messages = MessagesSerializerGet(many=True)
-    class Meta:
-        fields = '__all__'
-        model = Dialog
 
 
 class DialogsSerializerPost (serializers.ModelSerializer):

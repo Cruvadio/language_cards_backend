@@ -24,6 +24,7 @@ from rest_framework.documentation import include_docs_urls
 from backend import settings
 from users import views as uv
 from cards import views as cv
+from chat import views as chv
 
 router = routers.DefaultRouter()
 router.register(r'users', uv.UserViewSet)
@@ -34,6 +35,7 @@ router.register(r'themes', cv.ThemeViewSet)
 router.register(r'cardsets', cv.CardsetViewSet, basename="Cardset")
 router.register(r'cards', cv.CardViewSet)
 router.register(r'profiles', uv.ProfileViewSet)
+router.register(r'dialogs', chv.DialogsViewSet)
 
 API_TITLE = 'Language Cards API'
 API_DESCRIPTION = 'A Web API for language cards web-site.'
@@ -46,6 +48,7 @@ urlpatterns = [
    # path('api/v1/profile/language', uv.set_language, name='set_language'),
     path('api/v1/auth/', include("djoser.urls")),
     path('api/v1/auth/', include("djoser.urls.jwt")),
+    path('api/v1/', include("chat.urls")),
     path('api/v1/auth/blacklist/', uv.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='blacklist'),
     path('shema/', shema_view),
     path('docs/', include_docs_urls(title=API_TITLE,

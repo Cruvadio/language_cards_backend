@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'core.apps.CoreConfig',
     'django_filters',
-    'chat.apps.ChatConfig'
+    'chat.apps.ChatConfig',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,13 @@ TEMPLATES = [
         },
     },
 ]
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer" #TODO change backend!
+    }
+}
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
@@ -180,3 +188,5 @@ DJOSER = {
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locales')
 ]
+
+ASGI_APPLICATION = 'backend.routing.application'
